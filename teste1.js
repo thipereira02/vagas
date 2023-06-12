@@ -1,4 +1,6 @@
 var data =  require("./fakeData");
+var NotFoundError = require("./helpers/apiErrors").NotFoundError;
+var BadRequestError = require("./helpers/apiErrors").BadRequestError;
 
 const getUser = ( req, res, next ) => {
 
@@ -6,13 +8,13 @@ const getUser = ( req, res, next ) => {
         const { name } =  req.query;
 
         if (!name) {
-            return res.status(400).send('Name is required');
+            throw new BadRequestError('Name is required');
         }
 
         const user = data.find( user => user.name === name );
 
         if (!user) {
-            return res.status(404).send('User not found');
+            throw new NotFoundError('User not found');
         }
 
         return res.send(user);
