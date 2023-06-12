@@ -1,17 +1,36 @@
 var data =  require("./fakeData");
+var apiErrors = require("./helpers/apiErrors");
 
-module.exports = function(req, res){
-  
-    var name =  req.body.name;
-    var jov =  req.body.job;
-    
-    var newUser = {
-        name: name,
-        job: job,
+var BadRequestError = apiErrors.BadRequestError;
+
+const newUser = (req, res, next) => {
+
+    try {
+
+        var { name, job } =  req.body;
+
+        if (!name || !job) {
+            throw new BadRequestError("Name and job are required");
+        }
+
+        var id = data.length + 1;
+        
+        var newUser = {
+            id,
+            name,
+            job,
+        }
+
+        data.push(newUser);
+        
+        res.send(newUser);
+
+    } catch (error) {
+            
+        next(error);
+            
     }
 
-    data.push(newUser)
-    
-    res.send(newUser);
-
 };
+
+module.exports = newUser;
