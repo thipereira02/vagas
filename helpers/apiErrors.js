@@ -5,6 +5,12 @@ class ApiError extends Error {
 	}
 }
 
+class NoContentError extends ApiError {
+    constructor(message) {
+        super(204, message);
+    }
+}
+
 class BadRequestError extends ApiError {
 	constructor(message) {
 		super(400, message);
@@ -37,6 +43,7 @@ class ConflictError extends ApiError {
 
 module.exports = {
     ApiError,
+    NoContentError,
     BadRequestError,
     UnauthorizedError,
     ForbiddenError,

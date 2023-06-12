@@ -1,10 +1,14 @@
 var data =  require("./fakeData");
-var NotFoundError = require("./helpers/apiErrors").NotFoundError;
-var BadRequestError = require("./helpers/apiErrors").BadRequestError;
+var ApiError = require("./helpers/apiErrors");
+
+var NotFoundError = ApiError.NotFoundError;
+var BadRequestError = ApiError.BadRequestError;
+var NoContentError = ApiError.NoContentError;
 
 const getUser = ( req, res, next ) => {
 
     try {
+
         const { name } =  req.query;
 
         if (!name) {
@@ -20,15 +24,29 @@ const getUser = ( req, res, next ) => {
         return res.send(user);
 
     } catch (error) {
+
         next(error);
+
     }
 
 };
 
 const getUsers = ( req, res, next ) => {
-    
-    res.send(data);
-    
+
+    try{
+
+        if (data.length === 0) {
+            throw new NoContentError('No users found');
+        }
+
+        return res.send(data);
+
+    } catch (error) {
+
+        next(error);
+        
+    }
+
 };
 
 module.exports = {
