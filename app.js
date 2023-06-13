@@ -1,5 +1,6 @@
-require('dotenv').config();
-const express = require('express');
+require("dotenv").config();
+const express = require("express");
+
 const app = express();
 
 const teste1 = require("./teste1");
@@ -10,12 +11,12 @@ const teste5 = require("./teste5");
 const errorMiddleware = require("./middlewares/error");
 const authorizationMiddleware = require("./middlewares/authorization");
 
-app.set('view engine', 'jade');
+app.set("view engine", "jade");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(`${__dirname}/public`));
 
 app.get("/user", teste1.getUser);
 app.get("/users", teste1.getUsers);
@@ -25,7 +26,8 @@ app.put("/users", authorizationMiddleware, teste4);
 app.get("/users/access", teste5);
 app.use(errorMiddleware);
 
-const port  = 3000;
-app.listen(port, function(){
-  console.log('Express server listening on port ' + port);
+const port = 3000;
+app.listen(port, () => {
+  // eslint-disable-next-line no-console
+  console.log(`Express server listening on port ${port}`);
 });
