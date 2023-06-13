@@ -5,6 +5,8 @@ const NotFoundError = ApiError.NotFoundError;
 const BadRequestError = ApiError.BadRequestError;
 const NoContentError = ApiError.NoContentError;
 
+let userRequestCount = 0;
+
 const getUser = ( req, res, next ) => {
 
     try {
@@ -21,6 +23,8 @@ const getUser = ( req, res, next ) => {
             throw new NotFoundError('User not found');
         }
 
+        userRequestCount++;
+
         return res.send(user);
 
     } catch (error) {
@@ -29,6 +33,10 @@ const getUser = ( req, res, next ) => {
 
     }
 
+};
+
+const getRequestsCount = () => {
+    return userRequestCount;
 };
 
 const getUsers = ( req, res, next ) => {
@@ -51,5 +59,6 @@ const getUsers = ( req, res, next ) => {
 
 module.exports = {
     getUser,
+    getRequestsCount,
     getUsers
 };

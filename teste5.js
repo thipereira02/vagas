@@ -1,9 +1,27 @@
+const data =  require("./fakeData");
+const ApiError = require("./helpers/apiErrors");
+const teste1 = require("./teste1");
 
+const NotFoundError = ApiError.NotFoundError;
 
-module.exports = function(req, res){
+const countRequests = (req, res) => {
     
-    var name =  req.query.name;
+    const { name } =  req.query;
 
-    res.send("Usuário " +  name  + "  foi lido 0 vezes.");
+    if (!name) {
+        throw new NotFoundError('Name is required');
+    }
+
+    const user = data.find( user => user.name === name );
+
+    if (!user) {
+        throw new NotFoundError('User not found');
+    }
+
+    const userRequestCount = teste1.getRequestsCount();
+
+    res.send(`Usuário ${name} foi lido ${userRequestCount} vezes.`);
 
 };
+
+module.exports = countRequests;
