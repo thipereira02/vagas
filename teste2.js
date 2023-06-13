@@ -1,21 +1,21 @@
-var data =  require("./fakeData");
-var apiErrors = require("./helpers/apiErrors");
+const data =  require("./fakeData");
+const apiErrors = require("./helpers/apiErrors");
 
-var BadRequestError = apiErrors.BadRequestError;
+const BadRequestError = apiErrors.BadRequestError;
 
 const newUser = (req, res, next) => {
 
     try {
 
-        var { name, job } =  req.body;
+        const { name, job } =  req.body;
 
         if (!name || !job) {
             throw new BadRequestError("Name and job are required");
         }
 
-        var id = data.length + 1;
+        const id = data.length + 1;
         
-        var newUser = {
+        const newUser = {
             id,
             name,
             job,

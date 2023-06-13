@@ -1,9 +1,9 @@
-var data =  require("./fakeData");
-var ApiError = require("./helpers/apiErrors");
+const data =  require("./fakeData");
+const ApiError = require("./helpers/apiErrors");
 
-var NotFoundError = ApiError.NotFoundError;
-var BadRequestError = ApiError.BadRequestError;
-var NoContentError = ApiError.NoContentError;
+const NotFoundError = ApiError.NotFoundError;
+const BadRequestError = ApiError.BadRequestError;
+const NoContentError = ApiError.NoContentError;
 
 const getUser = ( req, res, next ) => {
 
