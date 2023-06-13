@@ -3,6 +3,8 @@ const apiErrors = require("./helpers/apiErrors");
 
 const BadRequestError = apiErrors.BadRequestError;
 
+let lastId = data.length;
+
 const newUser = (req, res, next) => {
 
     try {
@@ -13,7 +15,7 @@ const newUser = (req, res, next) => {
             throw new BadRequestError("Name and job are required");
         }
 
-        const id = data.length + 1;
+        const id = ++lastId;
         
         const newUser = {
             id,
