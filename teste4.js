@@ -7,6 +7,7 @@ const BadRequestError = ApiError.BadRequestError;
 const updateUser = (req, res, next) => {
 
     try {
+        
         const { id } =  req.query;
         const { name, job } =  req.body;
 

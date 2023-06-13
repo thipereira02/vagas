@@ -1,12 +1,13 @@
-var express = require('express');
-var app = express();
+require('dotenv').config();
+const express = require('express');
+const app = express();
 
-var teste1 = require("./teste1");
-var teste2 = require("./teste2");
-var teste3 = require("./teste3");
-var teste4 = require("./teste4");
-var teste5 = require("./teste5");
-var errorMiddleware = require("./middlewares/error");
+const teste1 = require("./teste1");
+const teste2 = require("./teste2");
+const teste3 = require("./teste3");
+const teste4 = require("./teste4");
+const teste5 = require("./teste5");
+const errorMiddleware = require("./middlewares/error");
 
 app.set('view engine', 'jade');
 
@@ -17,9 +18,9 @@ app.use(express.static(__dirname + '/public'));
 
 app.get("/user", teste1.getUser);
 app.get("/users", teste1.getUsers);
-app.post("/users", teste2)
-app.delete("/users", teste3)
-app.put("/users", teste4)
+app.post("/users", teste2);
+app.delete("/users", teste3);
+app.put("/users", teste4);
 app.get("/users/access", teste5);
 app.use(errorMiddleware);
 
