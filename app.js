@@ -8,6 +8,7 @@ const teste3 = require("./teste3");
 const teste4 = require("./teste4");
 const teste5 = require("./teste5");
 const errorMiddleware = require("./middlewares/error");
+const authorizationMiddleware = require("./middlewares/authorization");
 
 app.set('view engine', 'jade');
 
@@ -19,8 +20,8 @@ app.use(express.static(__dirname + '/public'));
 app.get("/user", teste1.getUser);
 app.get("/users", teste1.getUsers);
 app.post("/users", teste2);
-app.delete("/users", teste3);
-app.put("/users", teste4);
+app.delete("/users", authorizationMiddleware, teste3);
+app.put("/users", authorizationMiddleware, teste4);
 app.get("/users/access", teste5);
 app.use(errorMiddleware);
 
