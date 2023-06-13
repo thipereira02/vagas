@@ -1,13 +1,36 @@
-var data =  require("./fakeData");
+const data =  require("./fakeData");
+const ApiError = require("./helpers/apiErrors");
 
-module.exports =  function(req, res) {
-  
-    var id =  req.query.id;
+const NotFoundError = ApiError.NotFoundError;
+const BadRequestError = ApiError.BadRequestError;
 
-    const reg = data.find(d => id == id);
-    reg.name = req.body.name;
-    reg.job = req.body.job;
+const updateUser = (req, res, next) => {
 
-    res.send(reg);
+    try {
+        const { id } =  req.query;
+        const { name, job } =  req.body;
+
+        const user = data.find((user) => user.id === Number(id));
+
+        if (!user) {
+            throw new NotFoundError("User not found");
+        }
+
+        if (!name || !job) {
+            throw new BadRequestError("Name and job are required");
+        }
+
+        user.name = name;
+        user.job = job;
+
+        res.send(user);
+
+    } catch (error) {
+
+        next(error);
+
+    }
 
 };
+
+module.exports = updateUser;
